@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:movies_app_project/authentication/login/login_screen.dart';
 import 'package:movies_app_project/authentication/register/register_screen.dart';
@@ -11,18 +11,19 @@ void main(){
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key}); 
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.onBoardingScreenRouteName,
+      initialRoute: AppRoutes.registerRouteName,
       routes:{
+         AppRoutes.registerRouteName : (context) => RegisterScreen(),
         AppRoutes.onBoardingScreenRouteName : (context) => OnboardingScreen(),
         AppRoutes.homeScreenRouteName : (context) => HomeScreen(),
         AppRoutes.loginRouteName : (context) => LoginScreen(),
-        AppRoutes.registerRouteName : (context) => RegisterScreen(),
+       
       }
     );
   }
