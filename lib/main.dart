@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_app_project/authentication/login/forget_password_screen.dart';
 import 'package:movies_app_project/authentication/login/login_screen.dart';
 import 'package:movies_app_project/authentication/register/register_screen.dart';
 import 'package:movies_app_project/home/home_screen.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.homeScreenRouteName : (context) => HomeScreen(),
         AppRoutes.loginRouteName : (context) => LoginScreen(),
         AppRoutes.registerRouteName : (context) => RegisterScreen(),
+        AppRoutes.forgetPasswordRouteName : (context) => ForgetPasswordScreen()
       }
     );
   }
