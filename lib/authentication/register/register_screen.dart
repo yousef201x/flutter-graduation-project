@@ -4,7 +4,7 @@ import 'package:movies_app_project/authentication/register/widget/Pirmary_button
 import 'package:movies_app_project/authentication/register/widget/avatar_section.dart';
 import 'package:movies_app_project/authentication/register/widget/language_toggle.dart';
 import 'package:movies_app_project/authentication/register/widget/register_widget.dart';
-import 'package:movies_app_project/authentication/register/widget/body_register.dart'; // تأكد أن CustomTextField هنا
+import 'package:movies_app_project/authentication/register/widget/body_register.dart';
 import 'package:movies_app_project/utils/app_colors.dart';
 import 'package:movies_app_project/utils/app_routes.dart';
 
@@ -26,6 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       appBar: MyBar(title: 'Register'),
       body: SingleChildScrollView(
         child: Column(
+          spacing: 25,
           children: [
             AvatarSection(),
             Padding(

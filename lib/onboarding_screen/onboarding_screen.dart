@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app_project/utils/app_colors.dart';
+import 'package:movies_app_project/utils/app_routes.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -51,8 +52,8 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
         curve: Curves.easeInOut,
       );
     } else {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const Placeholder()),
+      Navigator.of(context).pushReplacementNamed(
+        AppRoutes.loginRouteName,
       );
     }
   }
@@ -120,7 +121,6 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
                         ),
                       ],
                       const SizedBox(height: 32),
-
                       if (index == 0)
                         _buildExploreNowButton(() => _onNextPage(index), size)
                       else
@@ -191,13 +191,16 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
         style: ElevatedButton.styleFrom(
           backgroundColor: isBack ? Colors.transparent : AppColors.yellowColor,
           foregroundColor: isBack ? AppColors.yellowColor : AppColors.blackColor,
-          side: isBack ? const BorderSide(color: AppColors.yellowColor, width: 2) : BorderSide.none,
+          side: isBack
+              ? const BorderSide(color: AppColors.yellowColor, width: 2)
+              : BorderSide.none,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           padding: EdgeInsets.symmetric(vertical: size.height * 0.018),
           elevation: isBack ? 0 : 4,
         ),
         onPressed: onPressed,
-        child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+        child: Text(text,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
       ),
     );
   }
