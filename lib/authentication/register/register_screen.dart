@@ -1,13 +1,14 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app_project/authentication/register/widget/Pirmary_button.dart';
 import 'package:movies_app_project/authentication/register/widget/avatar_section.dart';
-import 'package:movies_app_project/authentication/register/widget/body_register.dart';
 import 'package:movies_app_project/authentication/register/widget/language_toggle.dart';
 import 'package:movies_app_project/authentication/register/widget/register_widget.dart';
+import 'package:movies_app_project/authentication/register/widget/body_register.dart'; // تأكد أن CustomTextField هنا
 import 'package:movies_app_project/utils/app_colors.dart';
+import 'package:movies_app_project/utils/app_routes.dart';
 
-
-class RegisterScreen extends StatefulWidget  {
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
   @override
@@ -15,8 +16,7 @@ class RegisterScreen extends StatefulWidget  {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-    bool _obscurePassword = true;
-  // ignore: unused_field
+  bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
 
   @override
@@ -26,51 +26,58 @@ class _RegisterScreenState extends State<RegisterScreen> {
       appBar: MyBar(title: 'Register'),
       body: SingleChildScrollView(
         child: Column(
-            children:  [
-              AvatarSection(),
-              Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0,),
-          child: Column(
-            children: [
-              CustomTextField(hintText: 'Name', image: 'assets/images/icon _Identification_.png'),
-              SizedBox( height: 10),
-              CustomTextField(hintText: 'Email', image: 'assets/images/Vector.png'),
-                SizedBox( height: 10),
-                 CustomTextField(
-              hintText: "Password",
-              image: "assets/images/passsword.png",
-              obscureText: _obscurePassword,
-              showSuffixIcon: true,
-              toggleObscure: () {
-                setState(() {
-                  _obscurePassword = !_obscurePassword;
-                });
-              },
-            ),
-             SizedBox( height: 10),
-            CustomTextField(
-              hintText: "Confirm Password",
-              image: "assets/images/passsword.png",
-              obscureText: _obscurePassword,
-              showSuffixIcon: true,
-              toggleObscure: () {
-                setState(() {
-                  _obscurePassword = !_obscurePassword;
-                });
-              },
-            ),
-             SizedBox( height: 10),
-            CustomTextField(hintText: 'Phone Number', image: 'assets/images/phon.png'),
-            SizedBox( height: 10),
-             PrimaryButton(
-               text: "Create Account",
-               onPressed: () { },
-                      ),
-            
-                  const SizedBox(height: 20),
-
+          children: [
+            AvatarSection(),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  CustomTextField(
+                    hintText: 'Name',
+                    image: 'assets/images/icon _Identification_.png',
+                  ),
+                  SizedBox(height: 16),
+                  CustomTextField(
+                    hintText: 'Email',
+                    image: 'assets/images/Vector.png',
+                  ),
+                  SizedBox(height: 16),
+                  CustomTextField(
+                    hintText: "Password",
+                    image: "assets/images/passsword.png",
+                    obscureText: _obscurePassword,
+                    showSuffixIcon: true,
+                    toggleObscure: () {
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  CustomTextField(
+                    hintText: "Confirm Password",
+                    image: "assets/images/passsword.png",
+                    obscureText: _obscureConfirmPassword,
+                    showSuffixIcon: true,
+                    toggleObscure: () {
+                      setState(() {
+                        _obscureConfirmPassword = !_obscureConfirmPassword;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  CustomTextField(
+                    hintText: 'Phone Number',
+                    image: 'assets/images/phon.png',
+                  ),
+                  SizedBox(height: 16),
+                  PrimaryButton(
+                    text: "Create Account",
+                    onPressed: () {},
+                  ),
+                  SizedBox(height: 16),
                   RichText(
-                    text: const TextSpan(
+                    text: TextSpan(
                       text: "Already Have Account ? ",
                       style: TextStyle(color: Colors.grey),
                       children: [
@@ -80,26 +87,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             color: AppColors.yellowColor,
                             fontWeight: FontWeight.bold,
                           ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pushReplacementNamed(
+                                context,
+                                AppRoutes.loginRouteName,
+                              );
+                            },
                         ),
                       ],
                     ),
                   ),
-
-                  const SizedBox(height: 25),
-
-                  /// Language Switch
-                  const LanguageToggle(),
-
-                  const SizedBox(height: 30)
-          
-            
-          
-            ],
-             
+                  SizedBox(height: 25),
+                  LanguageToggle(),
+                  SizedBox(height: 30),
+                ],
               ),
-              ),
-            ],
-          ),
+            ),
+          ],
+        ),
       ),
     );
   }
