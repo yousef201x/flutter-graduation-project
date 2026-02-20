@@ -59,7 +59,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     child: InkWell(
                       onTap : (){
-                        //TODO : navigate to reset password screen
+                        Navigator.pushNamed(context, AppRoutes.forgetPasswordRouteName);
                       },
                       child: Text("Forget Password?" ,
                         style: AppStyles.semiBold14Yellow,
