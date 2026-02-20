@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.onBoardingScreenRouteName,
       routes:{
-        AppRoutes.onBoardingScreenRouteName : (context) => OnboardingScreen(),
+        AppRoutes.onBoardingScreenRouteName : (context) => OnBoardingScreen(),
         AppRoutes.homeScreenRouteName : (context) => HomeScreen(),
         AppRoutes.loginRouteName : (context) => LoginScreen(),
         AppRoutes.registerRouteName : (context) => RegisterScreen(),
