@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1076397047500",
+    "project_id": "flutter-graduation-proje-20036",
+    "storage_bucket": "flutter-graduation-proje-20036.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076397047500:android:9fe4414f24e9ef38c8cc69",
+        "android_client_info": {
+          "package_name": "com.example.movies_app_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7YJL4pjO_VQ1vkZ2mTcvRzCTExL2sg3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

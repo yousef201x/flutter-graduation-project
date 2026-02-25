@@ -6,8 +6,11 @@ import 'package:movies_app_project/authentication/register/register_screen.dart'
 import 'package:movies_app_project/home/home_screen.dart';
 import 'package:movies_app_project/onboarding_screen/onboarding_screen.dart';
 import 'package:movies_app_project/utils/app_routes.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main(){
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
