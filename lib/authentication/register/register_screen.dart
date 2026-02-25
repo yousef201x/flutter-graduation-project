@@ -1,12 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app_project/authentication/register/widget/Pirmary_button.dart';
-import 'package:movies_app_project/authentication/register/widget/avatar_section.dart';
-import 'package:movies_app_project/authentication/register/widget/language_toggle.dart';
-import 'package:movies_app_project/authentication/register/widget/register_widget.dart';
-import 'package:movies_app_project/authentication/register/widget/body_register.dart';
-import 'package:movies_app_project/utils/app_colors.dart';
-import 'package:movies_app_project/utils/app_routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -18,95 +12,324 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+  bool isEnglish = true;
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.blackColor,
-      appBar: MyBar(title: 'Register'),
-      body: SingleChildScrollView(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.yellow),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: const Text(
+          "Register",
+          style: TextStyle(
+            color: Colors.yellow,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator(color: Colors.yellow))
+          : SingleChildScrollView(
         child: Column(
-          spacing: 25,
           children: [
-            AvatarSection(),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildAvatar("assets/images/gamer (1) (2).png", 60),
+                _buildAvatar("assets/images/gamer (1) (1).png", 100),
+                _buildAvatar("assets/images/gamer (1) (3).png", 60),
+              ],
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              "Avatar",
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+            const SizedBox(height: 25),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  CustomTextField(
-                    hintText: 'Name',
-                    image: 'assets/images/icon _Identification_.png',
+                  _buildTextField(
+                    controller: nameController,
+                    hint: "Name",
+                    image: "assets/images/icon _Identification_.png",
                   ),
-                  SizedBox(height: 16),
-                  CustomTextField(
-                    hintText: 'Email',
-                    image: 'assets/images/Vector.png',
+                  const SizedBox(height: 16),
+                  _buildTextField(
+                    controller: emailController,
+                    hint: "Email",
+                    image: "assets/images/Vector.png",
                   ),
-                  SizedBox(height: 16),
-                  CustomTextField(
-                    hintText: "Password",
+                  const SizedBox(height: 16),
+                  _buildTextField(
+                    controller: passwordController,
+                    hint: "Password",
                     image: "assets/images/passsword.png",
-                    obscureText: _obscurePassword,
-                    showSuffixIcon: true,
-                    toggleObscure: () {
+                    obscure: _obscurePassword,
+                    showSuffix: true,
+                    onToggle: () {
                       setState(() {
                         _obscurePassword = !_obscurePassword;
                       });
                     },
                   ),
-                  SizedBox(height: 16),
-                  CustomTextField(
-                    hintText: "Confirm Password",
+                  const SizedBox(height: 16),
+                  _buildTextField(
+                    controller: confirmPasswordController,
+                    hint: "Confirm Password",
                     image: "assets/images/passsword.png",
-                    obscureText: _obscureConfirmPassword,
-                    showSuffixIcon: true,
-                    toggleObscure: () {
+                    obscure: _obscureConfirmPassword,
+                    showSuffix: true,
+                    onToggle: () {
                       setState(() {
-                        _obscureConfirmPassword = !_obscureConfirmPassword;
+                        _obscureConfirmPassword =
+                        !_obscureConfirmPassword;
                       });
                     },
                   ),
-                  SizedBox(height: 16),
-                  CustomTextField(
-                    hintText: 'Phone Number',
-                    image: 'assets/images/phon.png',
+                  const SizedBox(height: 16),
+                  _buildTextField(
+                    controller: phoneController,
+                    hint: "Phone Number",
+                    image: "assets/images/phon.png",
                   ),
-                  SizedBox(height: 16),
-                  PrimaryButton(
-                    text: "Create Account",
-                    onPressed: () {},
+                  const SizedBox(height: 16),
+
+                  /// Create Account Button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 55,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.yellow,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                      ),
+                      onPressed: () => _registerUser(),
+                      child: const Text(
+                        "Create Account",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ),
-                  SizedBox(height: 16),
+
+                  const SizedBox(height: 16),
+
+                  /// Login Text
                   RichText(
                     text: TextSpan(
                       text: "Already Have Account ? ",
-                      style: TextStyle(color: Colors.grey),
+                      style: const TextStyle(color: Colors.grey),
                       children: [
                         TextSpan(
                           text: "Login",
-                          style: TextStyle(
-                            color: AppColors.yellowColor,
+                          style: const TextStyle(
+                            color: Colors.yellow,
                             fontWeight: FontWeight.bold,
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              Navigator.pushReplacementNamed(
-                                context,
-                                AppRoutes.loginRouteName,
-                              );
+                              Navigator.pop(context);
                             },
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 25),
-                  LanguageToggle(),
-                  SizedBox(height: 30),
+
+                  const SizedBox(height: 25),
+
+                  /// Language Toggle
+                  Container(
+                    width: 100,
+                    height: 50,
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      border:
+                      Border.all(color: Colors.yellow, width: 2),
+                      borderRadius: BorderRadius.circular(35),
+                    ),
+                    child: Stack(
+                      children: [
+                        AnimatedAlign(
+                          duration: const Duration(milliseconds: 250),
+                          alignment: isEnglish
+                              ? Alignment.centerLeft
+                              : Alignment.centerRight,
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isEnglish = true;
+                                });
+                              },
+                              child: const CircleAvatar(
+                                radius: 16,
+                                backgroundImage: AssetImage(
+                                    'assets/images/LR.png'),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isEnglish = false;
+                                });
+                              },
+                              child: const CircleAvatar(
+                                radius: 16,
+                                backgroundImage: AssetImage(
+                                    'assets/images/EG.png'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 30),
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  /// Firebase Register Logic
+  void _registerUser() async {
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
+    String confirm = confirmPasswordController.text.trim();
+
+    if (email.isEmpty ||
+        password.isEmpty ||
+        confirm.isEmpty ||
+        nameController.text.isEmpty) {
+      _showSnack("Please fill all fields");
+      return;
+    }
+
+    if (password != confirm) {
+      _showSnack("Passwords do not match");
+      return;
+    }
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      _showSnack("Account created successfully");
+
+      // Clear fields
+      nameController.clear();
+      emailController.clear();
+      passwordController.clear();
+      confirmPasswordController.clear();
+      phoneController.clear();
+    } on FirebaseAuthException catch (e) {
+      _showSnack(e.message ?? "Something went wrong");
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  void _showSnack(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+
+  Widget _buildAvatar(String imagePath, double size) {
+    return CircleAvatar(
+      radius: size / 2,
+      backgroundImage: AssetImage(imagePath),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String hint,
+    required String image,
+    bool obscure = false,
+    bool showSuffix = false,
+    VoidCallback? onToggle,
+  }) {
+    return TextField(
+      controller: controller,
+      obscureText: obscure,
+      style: const TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.grey[800],
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Image.asset(
+            image,
+            width: 20,
+            height: 20,
+          ),
+        ),
+        hintText: hint,
+        hintStyle: const TextStyle(color: Colors.white),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        suffixIcon: showSuffix
+            ? IconButton(
+          icon: Icon(
+            obscure ? Icons.visibility_off : Icons.visibility,
+            color: Colors.white,
+          ),
+          onPressed: onToggle,
+        )
+            : null,
       ),
     );
   }
