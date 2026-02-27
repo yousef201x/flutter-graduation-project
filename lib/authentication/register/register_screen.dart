@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app_project/utils/app_colors.dart';
 import 'package:movies_app_project/utils/app_routes.dart';
-import 'package:movies_app_project/authentication/services/AuthService.dart';
+import 'package:movies_app_project/services/AuthService.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -244,6 +244,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final result = await _authService.registerWithEmail(
       email: email,
       password: password,
+      name: name,
     );
 
     setState(() {

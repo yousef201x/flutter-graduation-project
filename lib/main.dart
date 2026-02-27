@@ -7,7 +7,7 @@ import 'package:movies_app_project/home/home_screen.dart';
 import 'package:movies_app_project/onboarding_screen/onboarding_screen.dart';
 import 'package:movies_app_project/profile/update_profile_screen.dart';
 import 'package:movies_app_project/utils/app_routes.dart';
-import 'package:movies_app_project/authentication/services/AuthService.dart';
+import 'package:movies_app_project/services/AuthService.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
