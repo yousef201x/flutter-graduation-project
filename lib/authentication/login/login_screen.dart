@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app_project/authentication/services/AuthService.dart';
+import 'package:movies_app_project/services/AuthService.dart';
 import 'package:movies_app_project/home/widgets/custom_elevated_button.dart';
 import 'package:movies_app_project/utils/app_assets.dart';
 import 'package:movies_app_project/utils/app_colors.dart';

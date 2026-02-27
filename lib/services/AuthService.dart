@@ -12,12 +12,19 @@ class AuthService {
   Future<String?> registerWithEmail({
     required String email,
     required String password,
+    required String name,
   }) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
+      UserCredential credential = await _auth.createUserWithEmailAndPassword(
           email: email,
           password: password
       );
+
+      if (credential.user != null) {
+        await credential.user!.updateDisplayName(name);
+        await credential.user!.reload();
+      }
+
       return "success";
     } on FirebaseAuthException catch (e) {
       return e.message;
@@ -76,6 +83,29 @@ class AuthService {
       await _auth.sendPasswordResetEmail(email: email);
       return "success";
     } on FirebaseAuthException catch (e) {
+      return e.message;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<String?> updateProfile({required String name, required String photoUrl}) async {
+    try {
+      await _auth.currentUser?.updateDisplayName(name);
+      await _auth.currentUser?.updatePhotoURL(photoUrl);
+      await _auth.currentUser?.reload();
+      return "success";
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<String?> deleteAccount() async {
+    try {
+      await _auth.currentUser?.delete();
+      return "success";
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'requires-recent-login') return "re-authenticate";
       return e.message;
     } catch (e) {
       return e.toString();

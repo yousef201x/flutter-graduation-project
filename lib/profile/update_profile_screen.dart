@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app_project/services/AuthService.dart';
 import 'package:movies_app_project/home/widgets/custom_elevated_button.dart';
 import 'package:movies_app_project/home/widgets/custom_text_field.dart';
 import 'package:movies_app_project/utils/app_colors.dart';
+import 'package:movies_app_project/utils/app_routes.dart';
 import 'package:movies_app_project/utils/app_styles.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
@@ -12,8 +14,13 @@ class UpdateProfileScreen extends StatefulWidget {
 }
 
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
-  int selectedIndex = 0;
+  int selectedIndex = 8;
   bool showAvatars = false;
+  bool isLoading = false;
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final AuthService _authService = AuthService();
 
   final List<String> avatars = [
     "assets/images/avatar1.png",
@@ -26,6 +33,17 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     "assets/images/avatar8.png",
     "assets/images/main_avatar.png",
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    nameController.text = _authService.currentUser?.displayName ?? "";
+
+    String? currentPhoto = _authService.currentUser?.photoURL;
+    if (currentPhoto != null && avatars.contains(currentPhoto)) {
+      selectedIndex = avatars.indexOf(currentPhoto);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,26 +60,18 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,
-        title: Text(
-          "Pick Avatar",
-          style: AppStyles.regular16yellowRoboto,
-        ),
+        title: Text("Update Profile", style: AppStyles.regular16yellowRoboto),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: width * 0.04,
-            vertical: height * 0.01
-        ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator(color: AppColors.yellowColor))
+          : Padding(
+        padding: EdgeInsets.symmetric(horizontal: width * 0.04, vertical: height * 0.01),
         child: SingleChildScrollView(
           child: Column(
             children: [
               SizedBox(height: height * 0.02),
               GestureDetector(
-                onTap: () {
-                  setState(() {
-                    showAvatars = !showAvatars;
-                  });
-                },
+                onTap: () => setState(() => showAvatars = !showAvatars),
                 child: CircleAvatar(
                   radius: 70,
                   backgroundColor: const Color(0xFF282828),
@@ -72,42 +82,28 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 SizedBox(height: height * 0.03),
                 Container(
                   padding: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                      color: const Color(0xFF282828),
-                      borderRadius: BorderRadius.circular(25)),
+                  decoration: BoxDecoration(color: const Color(0xFF282828), borderRadius: BorderRadius.circular(25)),
                   child: GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: avatars.length,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        mainAxisSpacing: 15,
-                        crossAxisSpacing: 15),
+                        crossAxisCount: 3, mainAxisSpacing: 15, crossAxisSpacing: 15),
                     itemBuilder: (context, index) {
                       bool isSelected = selectedIndex == index;
                       return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedIndex = index;
-                            showAvatars = false;
-                          });
-                        },
+                        onTap: () => setState(() {
+                          selectedIndex = index;
+                          showAvatars = false;
+                        }),
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: isSelected
-                                  ? AppColors.yellowColor
-                                  : Colors.transparent,
-                              width: 2,
-                            ),
+                            border: Border.all(color: isSelected ? AppColors.yellowColor : Colors.transparent, width: 2),
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20),
-                            child: Image.asset(
-                              avatars[index],
-                              fit: BoxFit.cover,
-                            ),
+                            child: Image.asset(avatars[index], fit: BoxFit.cover),
                           ),
                         ),
                       );
@@ -117,14 +113,16 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               ],
               SizedBox(height: height * 0.04),
               CustomTextField(
-                hintText: "John Safwat",
+                controller: nameController,
+                hintText: "Full Name",
                 hintStyle: AppStyles.regular16white,
                 icon: const Icon(Icons.person, color: AppColors.whiteColor),
                 color: AppColors.whiteColor,
               ),
               SizedBox(height: height * 0.02),
               CustomTextField(
-                hintText: "012000000000",
+                controller: phoneController,
+                hintText: "Phone Number",
                 hintStyle: AppStyles.regular16white,
                 icon: const Icon(Icons.call, color: AppColors.whiteColor),
                 color: AppColors.whiteColor,
@@ -133,29 +131,24 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: _handleResetPassword,
                   style: TextButton.styleFrom(padding: EdgeInsets.zero),
-                  child: Text(
-                    "Reset Password",
-                    style: AppStyles.regular16white,
-                  ),
+                  child: Text("Reset Password", style: AppStyles.regular16white),
                 ),
               ),
-              SizedBox(height: height * 0.25),
-              CustomElevatedButton(
-                text: "Delete Account",
-                style: AppStyles.regular20whiteRoboto,
-                color: AppColors.redColor,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              const SizedBox(height: 15),
+              SizedBox(height: height * 0.23),
               CustomElevatedButton(
                 text: "Update Data",
                 style: AppStyles.regular20blackRoboto,
                 color: AppColors.yellowColor,
-                onPressed: () {},
+                onPressed: _handleUpdate,
+              ),
+              const SizedBox(height: 15),
+              CustomElevatedButton(
+                text: "Delete Account",
+                style: AppStyles.regular20whiteRoboto,
+                color: AppColors.redColor,
+                onPressed: _handleDelete,
               ),
               SizedBox(height: height * 0.03),
             ],
@@ -163,5 +156,66 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         ),
       ),
     );
+  }
+
+  void _handleUpdate() async {
+    String newName = nameController.text.trim();
+
+    setState(() => isLoading = true);
+
+    final res = await _authService.updateProfile(
+      name: newName,
+      photoUrl: avatars[selectedIndex],
+    );
+
+    setState(() => isLoading = false);
+
+    if (res == "success") {
+      _showSnack("Profile updated successfully!");
+    } else {
+      _showSnack(res!);
+    }
+  }
+
+  void _handleDelete() async {
+    setState(() => isLoading = true);
+    final res = await _authService.deleteAccount();
+    setState(() => isLoading = false);
+    if (res == "success") {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRoutes.loginRouteName,
+            (route) => false,
+      );
+    } else if (res == "re-authenticate") {
+      _showSnack("Please login again to confirm deletion");
+    } else {
+      _showSnack(res!);
+    }
+  }
+
+  void _handleResetPassword() async {
+    String? email = _authService.currentUser?.email;
+    if (email != null) {
+      await _authService.resetPassword(email);
+      _showSnack("Reset link sent to $email");
+    }
+  }
+
+  void _showSnack(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
+        backgroundColor: AppColors.greyColor,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    phoneController.dispose();
+    super.dispose();
   }
 }
