@@ -7,10 +7,23 @@ import 'package:movies_app_project/home/home_screen.dart';
 import 'package:movies_app_project/onboarding_screen/onboarding_screen.dart';
 import 'package:movies_app_project/utils/app_routes.dart';
 import 'package:movies_app_project/authentication/services/AuthService.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+
+  await dotenv.load(fileName: ".env");
+
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      apiKey: dotenv.env['FIREBASE_API_KEY']!,
+      appId: dotenv.env['FIREBASE_APP_ID']!,
+      messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID']!,
+      projectId: dotenv.env['FIREBASE_PROJECT_ID']!,
+      storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'],
+    ),
+  );
+
   runApp(const MyApp());
 }
 

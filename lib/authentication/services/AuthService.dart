@@ -1,9 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    clientId: dotenv.env['GOOGLE_CLIENT_ID'],
+  );
 
   Future<String?> registerWithEmail({
     required String email,
@@ -66,4 +70,15 @@ class AuthService {
   }
 
   User? get currentUser => _auth.currentUser;
+
+  Future<String?> resetPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      return "success";
+    } on FirebaseAuthException catch (e) {
+      return e.message;
+    } catch (e) {
+      return e.toString();
+    }
+  }
 }
