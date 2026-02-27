@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:movies_app_project/utils/app_colors.dart';
+import 'package:movies_app_project/utils/app_routes.dart';
+import 'package:movies_app_project/authentication/services/AuthService.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -13,6 +15,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
   bool isEnglish = true;
+  bool isLoading = false;
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -20,9 +23,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  bool isLoading = false;
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         backgroundColor: Colors.black,
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.yellow),
+          icon: const Icon(Icons.arrow_back, color: AppColors.yellowColor),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -40,14 +41,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
         title: const Text(
           "Register",
           style: TextStyle(
-            color: Colors.yellow,
+            color: AppColors.yellowColor,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
       ),
       body: isLoading
-          ? const Center(child: CircularProgressIndicator(color: Colors.yellow))
+          ? const Center(child: CircularProgressIndicator(color: AppColors.yellowColor))
           : SingleChildScrollView(
         child: Column(
           children: [
@@ -103,8 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     showSuffix: true,
                     onToggle: () {
                       setState(() {
-                        _obscureConfirmPassword =
-                        !_obscureConfirmPassword;
+                        _obscureConfirmPassword = !_obscureConfirmPassword;
                       });
                     },
                   ),
@@ -115,19 +115,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     image: "assets/images/phon.png",
                   ),
                   const SizedBox(height: 16),
-
-                  /// Create Account Button
                   SizedBox(
                     width: double.infinity,
                     height: 55,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.yellow,
+                        backgroundColor: AppColors.yellowColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18),
                         ),
                       ),
-                      onPressed: () => _registerUser(),
+                      onPressed: _registerUser,
                       child: const Text(
                         "Create Account",
                         style: TextStyle(
@@ -138,10 +136,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 16),
-
-                  /// Login Text
                   RichText(
                     text: TextSpan(
                       text: "Already Have Account ? ",
@@ -150,7 +145,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         TextSpan(
                           text: "Login",
                           style: const TextStyle(
-                            color: Colors.yellow,
+                            color: AppColors.yellowColor,
                             fontWeight: FontWeight.bold,
                           ),
                           recognizer: TapGestureRecognizer()
@@ -161,17 +156,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ],
                     ),
                   ),
-
                   const SizedBox(height: 25),
-
-                  /// Language Toggle
                   Container(
                     width: 100,
                     height: 50,
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                      border:
-                      Border.all(color: Colors.yellow, width: 2),
+                      border: Border.all(color: AppColors.yellowColor, width: 2),
                       borderRadius: BorderRadius.circular(35),
                     ),
                     child: Stack(
@@ -191,8 +182,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             GestureDetector(
                               onTap: () {
@@ -202,8 +192,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               },
                               child: const CircleAvatar(
                                 radius: 16,
-                                backgroundImage: AssetImage(
-                                    'assets/images/LR.png'),
+                                backgroundImage: AssetImage('assets/images/LR.png'),
                               ),
                             ),
                             GestureDetector(
@@ -214,8 +203,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               },
                               child: const CircleAvatar(
                                 radius: 16,
-                                backgroundImage: AssetImage(
-                                    'assets/images/EG.png'),
+                                backgroundImage: AssetImage('assets/images/EG.png'),
                               ),
                             ),
                           ],
@@ -223,7 +211,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ],
                     ),
                   ),
-
                   const SizedBox(height: 30),
                 ],
               ),
@@ -234,16 +221,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  /// Firebase Register Logic
   void _registerUser() async {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
     String confirm = confirmPasswordController.text.trim();
+    String name = nameController.text.trim();
 
-    if (email.isEmpty ||
-        password.isEmpty ||
-        confirm.isEmpty ||
-        nameController.text.isEmpty) {
+    if (email.isEmpty || password.isEmpty || confirm.isEmpty || name.isEmpty) {
       _showSnack("Please fill all fields");
       return;
     }
@@ -257,26 +241,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
       isLoading = true;
     });
 
-    try {
-      await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+    final result = await _authService.registerWithEmail(
+      email: email,
+      password: password,
+    );
 
+    setState(() {
+      isLoading = false;
+    });
+
+    if (result == "success") {
       _showSnack("Account created successfully");
-
-      // Clear fields
-      nameController.clear();
-      emailController.clear();
-      passwordController.clear();
-      confirmPasswordController.clear();
-      phoneController.clear();
-    } on FirebaseAuthException catch (e) {
-      _showSnack(e.message ?? "Something went wrong");
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
+      Navigator.pushReplacementNamed(context, AppRoutes.loginRouteName);
+    } else {
+      _showSnack(result ?? "An error occurred");
     }
   }
 
