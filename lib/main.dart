@@ -5,6 +5,7 @@ import 'package:movies_app_project/authentication/login/login_screen.dart';
 import 'package:movies_app_project/authentication/register/register_screen.dart';
 import 'package:movies_app_project/home/home_screen.dart';
 import 'package:movies_app_project/onboarding_screen/onboarding_screen.dart';
+import 'package:movies_app_project/profile/update_profile_screen.dart';
 import 'package:movies_app_project/utils/app_routes.dart';
 import 'package:movies_app_project/authentication/services/AuthService.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.loginRouteName: (context) => const LoginScreen(),
         AppRoutes.registerRouteName: (context) => const RegisterScreen(),
         AppRoutes.forgetPasswordRouteName: (context) => const ForgetPasswordScreen(),
+        AppRoutes.profileRouteName:(context) => const UpdateProfileScreen()
       },
     );
   }

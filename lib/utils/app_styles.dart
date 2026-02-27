@@ -7,9 +7,9 @@ import 'app_colors.dart';
 
 class AppStyles {
   static final TextStyle bold24white = GoogleFonts.inter(
-    fontSize: 24,
-    fontWeight: FontWeight.bold,
-    color: AppColors.whiteColor
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+      color: AppColors.whiteColor
   );
 
   static final TextStyle regular20white = GoogleFonts.inter(
@@ -60,6 +60,12 @@ class AppStyles {
       color: AppColors.whiteColor
   );
 
+  static final TextStyle regular20blackRoboto = GoogleFonts.roboto(
+      fontSize: 20,
+      fontWeight: FontWeight.w400,
+      color: AppColors.blackColor
+  );
+
   static final TextStyle bold24whiteRoboto = GoogleFonts.roboto(
       fontSize: 20,
       fontWeight: FontWeight.bold,
@@ -82,6 +88,12 @@ class AppStyles {
       fontSize: 16,
       fontWeight: FontWeight.w400,
       color: AppColors.whiteColor
+  );
+
+  static final TextStyle regular16yellowRoboto = GoogleFonts.roboto(
+      fontSize: 18,
+      fontWeight: FontWeight.w400,
+      color: AppColors.yellowColor
   );
 
   static final TextStyle semiBold20Black = GoogleFonts.inter(
