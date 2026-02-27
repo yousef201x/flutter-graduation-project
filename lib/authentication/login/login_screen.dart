@@ -42,7 +42,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: height * 0.065),
 
-              // Email Field
               TextFormField(
                 controller: emailController,
                 style: const TextStyle(color: Colors.white),
@@ -60,7 +59,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
               SizedBox(height: height * 0.02),
 
-              // Password Field
               TextFormField(
                 controller: passwordController,
                 obscureText: isObscured,
@@ -165,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(13),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: _loginWithGoogle,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -211,6 +209,24 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushReplacementNamed(context, AppRoutes.homeScreenRouteName);
     } else {
       _showSnack(result ?? "Login failed");
+    }
+  }
+
+  void _loginWithGoogle() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final result = await _authService.signInWithGoogle();
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (result == "success") {
+      Navigator.pushReplacementNamed(context, AppRoutes.homeScreenRouteName);
+    } else if (result != "Cancelled") {
+      _showSnack(result ?? "Google Login failed");
     }
   }
 
