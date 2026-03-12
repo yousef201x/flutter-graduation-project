@@ -54,10 +54,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.blackColor,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.yellowColor),
-          onPressed: () => Navigator.pop(context),
-        ),
         centerTitle: true,
         title: const Text(
           "Update Profile",
