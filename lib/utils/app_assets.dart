@@ -14,6 +14,4 @@ class AppAssets {
   static const String googleIcon = "assets/images/google_icon.png";
   static const String usaIcon = "assets/images/usa_logo.png";
   static const String egyIcon = "assets/images/egy_logo.png";
-
-
 }

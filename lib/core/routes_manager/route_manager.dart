@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+import 'package:movies_app_project/authentication/register/register_screen.dart';
+import 'package:movies_app_project/core/routes_manager/routes.dart';
+import 'package:movies_app_project/features/main_layout/browse_tab/browse_tab.dart';
+import 'package:movies_app_project/features/main_layout/main_layout.dart';
+import 'package:movies_app_project/features/movie_details_screen/movie_details_screen.dart';
+import 'package:movies_app_project/onboarding_screen/onboarding_screen.dart';
+import 'package:movies_app_project/authentication/login/login_screen.dart';
+import 'package:movies_app_project/profile/update_profile_screen.dart';
+
+class RouteGenerator {
+  static Route<dynamic> getRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case Routes.mainRoute:
+        return MaterialPageRoute(builder: (_) => const MainLayout());
+
+      case Routes.movieDetailsRoute:
+        final movieId = settings.arguments as num;
+        return MaterialPageRoute(
+          builder: (_) => MovieDetailsScreen(movieID: movieId),
+        );
+
+      case Routes.browseRoute:
+        final args = settings.arguments as Map<String, dynamic>;
+
+        final genreIndex = args["genreIndex"] as int;
+        final genres = args["genres"] as List<dynamic>?;
+
+        return MaterialPageRoute(
+          builder: (_) => BrowseTab(genreIndex: genreIndex, genres: genres,),
+        );
+      case Routes.onboardingRoute:
+        return MaterialPageRoute(builder: (_)=> const OnBoardingScreen());
+      case Routes.loginRoute:
+        return MaterialPageRoute(builder: (_) => const LoginScreen());
+      case Routes.signUpRoute:
+        return MaterialPageRoute(builder: (_) => const RegisterScreen());
+      case Routes.updateProfileRoute:
+        return MaterialPageRoute(builder: (_) => const UpdateProfileScreen());
+      default:
+        return unDefinedRoute();
+    }
+  }
+
+  static Route<dynamic> unDefinedRoute() {
+    return MaterialPageRoute(
+      builder: (_) => Scaffold(
+        appBar: AppBar(title: const Text('No Route Found')),
+        body: const Center(child: Text('No Route Found')),
+      ),
+    );
+  }
+}

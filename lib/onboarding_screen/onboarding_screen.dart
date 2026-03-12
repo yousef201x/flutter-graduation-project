@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app_project/core/routes_manager/routes.dart';
 import 'package:movies_app_project/utils/app_colors.dart';
-import 'package:movies_app_project/utils/app_routes.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -53,7 +53,7 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
       );
     } else {
       Navigator.of(context).pushReplacementNamed(
-        AppRoutes.loginRouteName,
+        Routes.loginRoute,
       );
     }
   }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app_project/core/routes_manager/routes.dart';
 import 'package:movies_app_project/services/AuthService.dart';
 import 'package:movies_app_project/home/widgets/custom_elevated_button.dart';
 import 'package:movies_app_project/utils/app_assets.dart';
 import 'package:movies_app_project/utils/app_colors.dart';
-import 'package:movies_app_project/utils/app_routes.dart';
-import 'package:movies_app_project/utils/app_styles.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -47,7 +46,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   hintText: "Email",
-                  hintStyle: AppStyles.regular16whiteRoboto,
+                  hintStyle: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
                   prefixIcon: const Icon(Icons.email, color: Colors.white),
                   filled: true,
                   fillColor: Colors.grey[900],
@@ -65,7 +67,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   hintText: "Password",
-                  hintStyle: AppStyles.regular16whiteRoboto,
+                  hintStyle: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
                   prefixIcon: const Icon(Icons.lock, color: Colors.white),
                   suffixIcon: IconButton(
                     onPressed: () {
@@ -93,11 +98,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: EdgeInsets.symmetric(vertical: height * 0.02),
                     child: InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.forgetPasswordRouteName);
+                        Navigator.pushNamed(context, Routes.forgetPasswordRoute);
                       },
-                      child: Text(
+                      child: const Text(
                         "Forget Password?",
-                        style: AppStyles.semiBold14Yellow,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: AppColors.yellowColor,
+                          fontWeight: FontWeight.w600, // semi-bold
+                        ),
                       ),
                     ),
                   ),
@@ -106,7 +115,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
               CustomElevatedButton(
                 text: "Login",
-                style: AppStyles.regular20black,
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: AppColors.blackColor,
+                ),
                 onPressed: _login,
               ),
 
@@ -115,13 +127,26 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don’t Have Account ?", style: AppStyles.regular14whiteRoboto),
+                  const Text(
+                    "Don’t Have Account ?",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white,
+                    ),
+                  ),
                   const SizedBox(width: 8),
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, AppRoutes.registerRouteName);
+                      Navigator.pushNamed(context, Routes.signUpRoute);
                     },
-                    child: Text("Create One", style: AppStyles.semiBold14Yellow),
+                    child: const Text(
+                      "Create One",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppColors.yellowColor,
+                        fontWeight: FontWeight.w600, // semi-bold
+                      ),
+                    ),
                   )
                 ],
               ),
@@ -139,7 +164,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       endIndent: width * 0.06,
                     ),
                   ),
-                  Text("OR", style: AppStyles.semiBold14Yellow),
+                  const Text(
+                    "OR",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: AppColors.yellowColor,
+                      fontWeight: FontWeight.w600, // semi-bold
+                    ),
+                  ),
                   Expanded(
                     child: Divider(
                       color: AppColors.yellowColor,
@@ -169,7 +201,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       Image.asset(AppAssets.googleIcon),
                       SizedBox(width: width * 0.03),
-                      Text("Login With Google", style: AppStyles.regular20black)
+                      const Text(
+                        "Login With Google",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: AppColors.blackColor,
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -206,7 +244,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     if (result == "success") {
-      Navigator.pushReplacementNamed(context, AppRoutes.homeScreenRouteName);
+      Navigator.pushReplacementNamed(context, Routes.mainRoute);
     } else {
       _showSnack(result ?? "Login failed");
     }
@@ -224,7 +262,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     if (result == "success") {
-      Navigator.pushReplacementNamed(context, AppRoutes.homeScreenRouteName);
+      Navigator.pushReplacementNamed(context, Routes.mainRoute);
     } else if (result != "Cancelled") {
       _showSnack(result ?? "Google Login failed");
     }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app_project/core/routes_manager/routes.dart';
 import 'package:movies_app_project/services/AuthService.dart';
 import 'package:movies_app_project/home/widgets/custom_elevated_button.dart';
 import 'package:movies_app_project/home/widgets/custom_text_field.dart';
 import 'package:movies_app_project/utils/app_colors.dart';
-import 'package:movies_app_project/utils/app_routes.dart';
-import 'package:movies_app_project/utils/app_styles.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({super.key});
@@ -60,7 +59,13 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,
-        title: Text("Update Profile", style: AppStyles.regular16yellowRoboto),
+        title: const Text(
+          "Update Profile",
+          style: TextStyle(
+            fontSize: 16,
+            color: AppColors.yellowColor,
+          ),
+        ),
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator(color: AppColors.yellowColor))
@@ -115,7 +120,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               CustomTextField(
                 controller: nameController,
                 hintText: "Full Name",
-                hintStyle: AppStyles.regular16white,
+                hintStyle: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
                 icon: const Icon(Icons.person, color: AppColors.whiteColor),
                 color: AppColors.whiteColor,
               ),
@@ -123,7 +131,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               CustomTextField(
                 controller: phoneController,
                 hintText: "Phone Number",
-                hintStyle: AppStyles.regular16white,
+                hintStyle: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
                 icon: const Icon(Icons.call, color: AppColors.whiteColor),
                 color: AppColors.whiteColor,
               ),
@@ -133,20 +144,32 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 child: TextButton(
                   onPressed: _handleResetPassword,
                   style: TextButton.styleFrom(padding: EdgeInsets.zero),
-                  child: Text("Reset Password", style: AppStyles.regular16white),
+                  child: const Text(
+                    "Reset Password",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
               SizedBox(height: height * 0.23),
               CustomElevatedButton(
                 text: "Update Data",
-                style: AppStyles.regular20blackRoboto,
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: AppColors.blackColor,
+                ),
                 color: AppColors.yellowColor,
                 onPressed: _handleUpdate,
               ),
               const SizedBox(height: 15),
               CustomElevatedButton(
                 text: "Delete Account",
-                style: AppStyles.regular20whiteRoboto,
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
                 color: AppColors.redColor,
                 onPressed: _handleDelete,
               ),
@@ -184,7 +207,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     if (res == "success") {
       Navigator.pushNamedAndRemoveUntil(
         context,
-        AppRoutes.loginRouteName,
+        Routes.loginRoute,
             (route) => false,
       );
     } else if (res == "re-authenticate") {
