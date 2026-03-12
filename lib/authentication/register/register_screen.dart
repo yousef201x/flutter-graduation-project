@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_app_project/core/routes_manager/routes.dart';
 import 'package:movies_app_project/utils/app_colors.dart';
-import 'package:movies_app_project/utils/app_routes.dart';
 import 'package:movies_app_project/services/AuthService.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -253,7 +253,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     if (result == "success") {
       _showSnack("Account created successfully");
-      Navigator.pushReplacementNamed(context, AppRoutes.loginRouteName);
+      Navigator.pushReplacementNamed(context, Routes.loginRoute);
     } else {
       _showSnack(result ?? "An error occurred");
     }

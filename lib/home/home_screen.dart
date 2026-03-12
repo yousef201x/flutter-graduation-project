@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app_project/utils/app_routes.dart';
+import 'package:movies_app_project/core/routes_manager/routes.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(AppRoutes.profileRouteName);
+                Navigator.of(context).pushNamed(Routes.updateProfileRoute);
               },
               child: const Text("Go to Profile Page"),
             ),
