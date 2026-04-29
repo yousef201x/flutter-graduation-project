@@ -1,4 +1,4 @@
-import 'package:movies_app_project/features/main_layout/home_tab/data/models/movie_model.dart';
+import 'package:movies/features/main_layout/home_tab/data/models/movie_model.dart';
 
 enum RequestStatus { init, loading, success, error }
 

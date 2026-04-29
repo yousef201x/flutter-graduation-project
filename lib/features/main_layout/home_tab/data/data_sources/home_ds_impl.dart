@@ -1,8 +1,8 @@
 import 'package:injectable/injectable.dart';
-import 'package:movies_app_project/core/api/api_manager.dart';
-import 'package:movies_app_project/core/api/endpoints.dart';
-import 'package:movies_app_project/features/main_layout/home_tab/data/data_sources/home_ds.dart';
-import 'package:movies_app_project/features/main_layout/home_tab/data/models/movie_model.dart';
+import 'package:movies/core/api/api_manager.dart';
+import 'package:movies/core/api/endpoints.dart';
+import 'package:movies/features/main_layout/home_tab/data/data_sources/home_ds.dart';
+import 'package:movies/features/main_layout/home_tab/data/models/movie_model.dart';
 
 @Injectable(as: HomeDs)
 class HomeDsImpl implements HomeDs {

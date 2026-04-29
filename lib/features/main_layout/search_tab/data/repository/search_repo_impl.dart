@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
-import 'package:movies_app_project/features/main_layout/search_tab/data/data_sources/search_ds.dart';
-import 'package:movies_app_project/features/main_layout/search_tab/domain/repository/search_repo.dart';
+import 'package:movies/features/main_layout/search_tab/data/data_sources/search_ds.dart';
+import 'package:movies/features/main_layout/search_tab/domain/repository/search_repo.dart';
 
 @Injectable(as: SearchRepo)
 class SearchRepoImpl implements SearchRepo {

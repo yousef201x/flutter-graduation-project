@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:movies_app_project/features/main_layout/home_tab/presentation/bloc/home_states.dart';
-import 'package:movies_app_project/features/main_layout/search_tab/domain/usecases/search_movies.dart';
-import 'package:movies_app_project/features/main_layout/search_tab/presentation/bloc/search_event.dart';
-import 'package:movies_app_project/features/main_layout/search_tab/presentation/bloc/search_states.dart';
+import 'package:movies/features/main_layout/home_tab/presentation/bloc/home_states.dart';
+import 'package:movies/features/main_layout/search_tab/domain/usecases/search_movies.dart';
+import 'package:movies/features/main_layout/search_tab/presentation/bloc/search_event.dart';
+import 'package:movies/features/main_layout/search_tab/presentation/bloc/search_states.dart';
 
 @injectable
 class SearchBloc extends Bloc<SearchEvents, SearchStates> {

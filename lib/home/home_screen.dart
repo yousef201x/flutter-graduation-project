@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app_project/core/routes_manager/routes.dart';
+import 'package:movies/core/routes_manager/routes.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

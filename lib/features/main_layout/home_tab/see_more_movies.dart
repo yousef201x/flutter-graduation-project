@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app_project/core/widgets/custom_grid_view.dart';
-import 'package:movies_app_project/features/main_layout/home_tab/data/models/movie_model.dart';
-import 'package:movies_app_project/utils/app_colors.dart';
+import 'package:movies/core/widgets/custom_grid_view.dart';
+import 'package:movies/features/main_layout/home_tab/data/models/movie_model.dart';
+import 'package:movies/utils/app_colors.dart';
 
 class SeeMoreMovies extends StatelessWidget {
   final List<Movies> movies;

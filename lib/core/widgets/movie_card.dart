@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies_app_project/features/main_layout/home_tab/data/models/movie_model.dart';
-import 'package:movies_app_project/utils/app_colors.dart';
+import 'package:movies/features/main_layout/home_tab/data/models/movie_model.dart';
+import 'package:movies/utils/app_colors.dart';
 
 class MovieCard extends StatelessWidget {
   final Movies movie;

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:movies_app_project/core/widgets/custom_grid_view.dart';
-import 'package:movies_app_project/di.dart';
-import 'package:movies_app_project/features/main_layout/browse_tab/presentation/bloc/browse_bloc.dart';
-import 'package:movies_app_project/features/main_layout/browse_tab/presentation/bloc/browse_event.dart';
-import 'package:movies_app_project/features/main_layout/browse_tab/presentation/bloc/browse_states.dart';
-import 'package:movies_app_project/features/main_layout/home_tab/presentation/bloc/home_states.dart';
-import 'package:movies_app_project/utils/app_colors.dart';
+import 'package:movies/core/widgets/custom_grid_view.dart';
+import 'package:movies/di.dart';
+import 'package:movies/features/main_layout/browse_tab/presentation/bloc/browse_bloc.dart';
+import 'package:movies/features/main_layout/browse_tab/presentation/bloc/browse_event.dart';
+import 'package:movies/features/main_layout/browse_tab/presentation/bloc/browse_states.dart';
+import 'package:movies/features/main_layout/home_tab/presentation/bloc/home_states.dart';
+import 'package:movies/utils/app_colors.dart';
 
 class BrowseTab extends StatefulWidget {
   final List<dynamic>? genres;

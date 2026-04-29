@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:movies_app_project/di.dart';
-import 'package:movies_app_project/features/main_layout/browse_tab/browse_tab.dart';
-import 'package:movies_app_project/features/main_layout/home_tab/home_tab.dart';
-import 'package:movies_app_project/features/main_layout/home_tab/presentation/bloc/home_bloc.dart';
-import 'package:movies_app_project/features/main_layout/home_tab/presentation/bloc/home_event.dart';
-import 'package:movies_app_project/features/main_layout/home_tab/presentation/bloc/home_states.dart';
-import 'package:movies_app_project/features/main_layout/profile_tab/profile_tab.dart';
-import 'package:movies_app_project/features/main_layout/search_tab/search_tab.dart';
-import 'package:movies_app_project/utils/app_colors.dart';
+import 'package:movies/core/resources/color_manager.dart';
+import 'package:movies/di.dart';
+import 'package:movies/features/main_layout/browse_tab/browse_tab.dart';
+import 'package:movies/features/main_layout/home_tab/home_tab.dart';
+import 'package:movies/features/main_layout/home_tab/presentation/bloc/home_bloc.dart';
+import 'package:movies/features/main_layout/home_tab/presentation/bloc/home_event.dart';
+import 'package:movies/features/main_layout/home_tab/presentation/bloc/home_states.dart';
+import 'package:movies/features/main_layout/profile_tab/profile_screen.dart';
+import 'package:movies/features/main_layout/search_tab/search_tab.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -23,12 +23,13 @@ class _MainLayoutState extends State<MainLayout> {
 
   @override
   Widget build(BuildContext context) {
+    final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     return LoaderOverlay(
-      overlayColor: AppColors.blackColor.withOpacity(0.7),
+      overlayColor: ColorManager.black.withOpacity(0.7),
       overlayWidgetBuilder: (progress) {
         return Center(
           child: CircularProgressIndicator(
-            color: AppColors.whiteColor,
+            color: Colors.white,
           ),
         );
       },
@@ -47,16 +48,17 @@ class _MainLayoutState extends State<MainLayout> {
             final movies = state.movieResponse?.data?.movies;
             final genres = movies?.expand((movie) => movie.genres ?? []).toSet().toList();
             genres?.sort();
-            List<Widget> tabs = [HomeTab(), SearchTab(), BrowseTab(genres: genres,), ProfileTab()];
+            List<Widget> tabs = [HomeTab(), SearchTab(), BrowseTab(genres: genres,), ProfileScreen()];
             return Scaffold(
+              resizeToAvoidBottomInset: false,
               extendBody: true,
               body: tabs[currentIndex],
-              bottomNavigationBar: MediaQuery.removePadding(
+              bottomNavigationBar: isKeyboardOpen ? null : MediaQuery.removePadding(
                 context: context,
                 removeBottom: true,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.transparent
+                      color: Colors.transparent
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(18),
@@ -66,10 +68,10 @@ class _MainLayoutState extends State<MainLayout> {
                         height: 60,
                         child: BottomNavigationBar(
                           currentIndex: currentIndex,
-                          backgroundColor: AppColors.greyColor,
+                          backgroundColor: ColorManager.darkGrey,
                           type: BottomNavigationBarType.fixed,
-                          selectedItemColor: AppColors.yellowColor,
-                          unselectedItemColor: AppColors.whiteColor,
+                          selectedItemColor: ColorManager.yellow,
+                          unselectedItemColor: ColorManager.white,
                           showSelectedLabels: false,
                           showUnselectedLabels: false,
                           onTap: (index) {

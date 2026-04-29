@@ -1,8 +1,8 @@
 import 'package:injectable/injectable.dart';
-import 'package:movies_app_project/core/api/api_manager.dart';
-import 'package:movies_app_project/core/api/endpoints.dart';
-import 'package:movies_app_project/features/main_layout/browse_tab/data/data_sources/browse_ds.dart';
-import 'package:movies_app_project/features/main_layout/home_tab/data/models/movie_model.dart';
+import 'package:movies/core/api/api_manager.dart';
+import 'package:movies/core/api/endpoints.dart';
+import 'package:movies/features/main_layout/browse_tab/data/data_sources/browse_ds.dart';
+import 'package:movies/features/main_layout/home_tab/data/models/movie_model.dart';
 
 @Injectable(as: BrowseDs)
 class BrowseDsImpl implements BrowseDs {
