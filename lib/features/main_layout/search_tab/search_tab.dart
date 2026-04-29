@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies_app_project/core/widgets/custom_grid_view.dart';
-import 'package:movies_app_project/di.dart';
-import 'package:movies_app_project/features/main_layout/search_tab/presentation/bloc/search_bloc.dart';
-import 'package:movies_app_project/features/main_layout/search_tab/presentation/bloc/search_event.dart';
-import 'package:movies_app_project/features/main_layout/search_tab/presentation/bloc/search_states.dart';
-import 'package:movies_app_project/utils/app_colors.dart';
+import 'package:movies/core/widgets/custom_grid_view.dart';
+import 'package:movies/di.dart';
+import 'package:movies/features/main_layout/search_tab/presentation/bloc/search_bloc.dart';
+import 'package:movies/features/main_layout/search_tab/presentation/bloc/search_event.dart';
+import 'package:movies/features/main_layout/search_tab/presentation/bloc/search_states.dart';
+import 'package:movies/utils/app_colors.dart';
 
 class SearchTab extends StatefulWidget {
   const SearchTab({super.key});
@@ -27,9 +27,11 @@ class _SearchTabState extends State<SearchTab> {
         listener: (context, state) {},
         builder: (context, state) {
           final movies = state.movieResponse?.data?.movies;
-          return Scaffold(
-            backgroundColor: AppColors.blackColor,
-            body: SafeArea(
+          return Container(
+            //resizeToAvoidBottomInset: false,
+            //backgroundColor: AppColors.blackColor,
+            color: AppColors.blackColor,
+            child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
@@ -58,7 +60,7 @@ class _SearchTabState extends State<SearchTab> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 13.h),
+                    SizedBox(height: 13),
                     searchController.text.isEmpty
                         ? Expanded(child: Center(child: Image.asset('assets/images/empty_result.png',),))
                         : Expanded(

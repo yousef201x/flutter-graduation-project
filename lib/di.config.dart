@@ -71,28 +71,34 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.lazySingleton<_i237.ApiManager>(() => _i237.ApiManager());
-    gh.factory<_i403.SearchDs>(
-      () => _i906.SearchDsImpl(gh<_i237.ApiManager>()),
-    );
-    gh.factory<_i638.SearchRepo>(
-      () => _i613.SearchRepoImpl(gh<_i403.SearchDs>()),
-    );
     gh.factory<_i816.HomeDs>(() => _i883.HomeDsImpl(gh<_i237.ApiManager>()));
-    gh.factory<_i365.MovieDetailsDs>(
-      () => _i377.MovieDetailsDsImpl(gh<_i237.ApiManager>()),
-    );
     gh.factory<_i984.BrowseDs>(
       () => _i689.BrowseDsImpl(gh<_i237.ApiManager>()),
     );
-    gh.factory<_i55.HomeRepo>(() => _i185.HomeRepoImpl(gh<_i816.HomeDs>()));
+    gh.factory<_i365.MovieDetailsDs>(
+      () => _i377.MovieDetailsDsImpl(gh<_i237.ApiManager>()),
+    );
+    gh.factory<_i403.SearchDs>(
+      () => _i906.SearchDsImpl(gh<_i237.ApiManager>()),
+    );
+    gh.factory<_i681.BrowseMoviesRepo>(
+      () => _i782.BrowseRepoImpl(gh<_i984.BrowseDs>()),
+    );
     gh.factory<_i907.MovieDetailsRepo>(
       () => _i207.MovieDetailsRepoImpl(gh<_i365.MovieDetailsDs>()),
     );
+    gh.factory<_i55.HomeRepo>(() => _i185.HomeRepoImpl(gh<_i816.HomeDs>()));
     gh.factory<_i260.GetMovieDetailsUseCase>(
       () => _i260.GetMovieDetailsUseCase(gh<_i907.MovieDetailsRepo>()),
     );
     gh.factory<_i689.GetMoviesSuggestionUseCase>(
       () => _i689.GetMoviesSuggestionUseCase(gh<_i907.MovieDetailsRepo>()),
+    );
+    gh.factory<_i671.BrowseMoviesUseCase>(
+      () => _i671.BrowseMoviesUseCase(gh<_i681.BrowseMoviesRepo>()),
+    );
+    gh.factory<_i638.SearchRepo>(
+      () => _i613.SearchRepoImpl(gh<_i403.SearchDs>()),
     );
     gh.factory<_i292.SearchMoviesUseCase>(
       () => _i292.SearchMoviesUseCase(gh<_i638.SearchRepo>()),
@@ -103,18 +109,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i227.GetMoviesByGenreUseCase>(
       () => _i227.GetMoviesByGenreUseCase(gh<_i55.HomeRepo>()),
     );
-    gh.factory<_i681.BrowseMoviesRepo>(
-      () => _i782.BrowseRepoImpl(gh<_i984.BrowseDs>()),
-    );
-    gh.factory<_i655.HomeBloc>(
-      () => _i655.HomeBloc(
-        gh<_i227.GetMoviesByGenreUseCase>(),
-        gh<_i809.GetMoviesUseCase>(),
-      ),
-    );
-    gh.factory<_i671.BrowseMoviesUseCase>(
-      () => _i671.BrowseMoviesUseCase(gh<_i681.BrowseMoviesRepo>()),
-    );
     gh.factory<_i725.MovieDetailsBloc>(
       () => _i725.MovieDetailsBloc(
         gh<_i260.GetMovieDetailsUseCase>(),
@@ -123,6 +117,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i504.SearchBloc>(
       () => _i504.SearchBloc(gh<_i292.SearchMoviesUseCase>()),
+    );
+    gh.factory<_i655.HomeBloc>(
+      () => _i655.HomeBloc(
+        gh<_i227.GetMoviesByGenreUseCase>(),
+        gh<_i809.GetMoviesUseCase>(),
+      ),
     );
     gh.factory<_i284.BrowseBloc>(
       () => _i284.BrowseBloc(gh<_i671.BrowseMoviesUseCase>()),

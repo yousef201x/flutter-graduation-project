@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app_project/core/routes_manager/routes.dart';
-import 'package:movies_app_project/services/AuthService.dart';
-import 'package:movies_app_project/home/widgets/custom_elevated_button.dart';
-import 'package:movies_app_project/utils/app_assets.dart';
-import 'package:movies_app_project/utils/app_colors.dart';
+import 'package:movies/core/routes_manager/routes.dart';
+import 'package:movies/services/AuthService.dart';
+import 'package:movies/home/widgets/custom_elevated_button.dart';
+import 'package:movies/utils/app_assets.dart';
+import 'package:movies/utils/app_colors.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -98,7 +98,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: EdgeInsets.symmetric(vertical: height * 0.02),
                     child: InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, Routes.forgetPasswordRoute);
+                        if (emailController.text.trim().isEmpty) {
+                          _showSnack("Please fill the email first");
+                        } else {
+                          Navigator.pushNamed(
+                            context,
+                            Routes.forgetPasswordRoute,
+                            arguments: emailController.text.trim(),
+                          );
+                        }
                       },
                       child: const Text(
                         "Forget Password?",

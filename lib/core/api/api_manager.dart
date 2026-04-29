@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:movies_app_project/core/resources/constants_manager.dart';
+import 'package:movies/core/resources/constants_manager.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 

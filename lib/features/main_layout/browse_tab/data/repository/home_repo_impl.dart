@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
-import 'package:movies_app_project/features/main_layout/browse_tab/data/data_sources/browse_ds.dart';
-import 'package:movies_app_project/features/main_layout/browse_tab/domain/repository/browse_repo.dart';
-import 'package:movies_app_project/features/main_layout/home_tab/data/models/movie_model.dart';
+import 'package:movies/features/main_layout/browse_tab/data/data_sources/browse_ds.dart';
+import 'package:movies/features/main_layout/browse_tab/domain/repository/browse_repo.dart';
+import 'package:movies/features/main_layout/home_tab/data/models/movie_model.dart';
 
 @Injectable(as: BrowseMoviesRepo)
 class BrowseRepoImpl implements BrowseMoviesRepo {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app_project/core/routes_manager/routes.dart';
-import 'package:movies_app_project/utils/app_colors.dart';
+import 'package:movies/core/routes_manager/routes.dart';
+import 'package:movies/utils/app_colors.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});

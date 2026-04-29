@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies_app_project/core/routes_manager/routes.dart';
-import 'package:movies_app_project/core/widgets/movie_card.dart';
-import 'package:movies_app_project/features/main_layout/home_tab/data/models/movie_model.dart';
+import 'package:movies/core/routes_manager/routes.dart';
+import 'package:movies/core/widgets/movie_card.dart';
+import 'package:movies/features/main_layout/home_tab/data/models/movie_model.dart';
 
 class CustomGridView extends StatelessWidget {
   final List<Movies>? movies;

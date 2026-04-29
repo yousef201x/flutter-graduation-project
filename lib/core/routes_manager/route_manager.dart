@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app_project/authentication/register/register_screen.dart';
-import 'package:movies_app_project/core/routes_manager/routes.dart';
-import 'package:movies_app_project/features/main_layout/browse_tab/browse_tab.dart';
-import 'package:movies_app_project/features/main_layout/main_layout.dart';
-import 'package:movies_app_project/features/movie_details_screen/movie_details_screen.dart';
-import 'package:movies_app_project/onboarding_screen/onboarding_screen.dart';
-import 'package:movies_app_project/authentication/login/login_screen.dart';
-import 'package:movies_app_project/profile/update_profile_screen.dart';
+import 'package:movies/authentication/register/register_screen.dart';
+import 'package:movies/core/routes_manager/routes.dart';
+import 'package:movies/features/main_layout/browse_tab/browse_tab.dart';
+import 'package:movies/features/main_layout/main_layout.dart';
+import 'package:movies/features/main_layout/profile_tab/profile_screen.dart';
+import 'package:movies/features/movie_details_screen/movie_details_screen.dart';
+import 'package:movies/onboarding_screen/onboarding_screen.dart';
+import 'package:movies/authentication/login/login_screen.dart';
+import 'package:movies/authentication/login/forget_password_screen.dart';
+import 'package:movies/profile/update_profile_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -35,8 +37,13 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case Routes.signUpRoute:
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
+      case Routes.forgetPasswordRoute:
+      case Routes.forgotPasswordRoute:
+        return MaterialPageRoute(builder: (_) => const ForgetPasswordScreen());
       case Routes.updateProfileRoute:
         return MaterialPageRoute(builder: (_) => const UpdateProfileScreen());
+      case Routes.profileRoute:
+        return MaterialPageRoute(builder: (_) => const ProfileScreen());
       default:
         return unDefinedRoute();
     }
